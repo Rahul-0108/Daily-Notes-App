@@ -1,0 +1,26 @@
+{
+  "name": "dailynotesapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rahul-0108/Daily-Notes-App.git"
+  },
+  "author": "Rahul Jaiswal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rahul-0108/Daily-Notes-App/issues"
+  },
+  "homepage": "https://github.com/Rahul-0108/Daily-Notes-App#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.13"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0"
+  }
+}
