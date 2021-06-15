@@ -1,0 +1,61 @@
+.header {
+ color: white;
+ background-color: green;
+ padding: 8px;
+ text-align: center;
+ font-weight: normal;
+ margin-left: 8px;
+ margin-right: 8px;
+}
+
+.footer {
+ background-color: green;
+ color: white;
+ position: fixed;
+ bottom: 0px;
+ display: block;
+ left: 8px;
+ right: 8px;
+ bottom: 0px;
+ padding: 6px;
+ text-align: center;
+ font-weight: normal;
+}
+
+.dot {
+ height: 50px;
+ width: 50px;
+ background-color: #bbb;
+ border-radius: 50%;
+ display: inline-block;
+ position: absolute;
+ right: 28px;
+ top: 7px;
+ color: white;
+ text-align: center;
+ padding-top: 12px;
+}
+
+.drop-down {
+ background-color: white;
+ margin-top: 22px;
+ color: black;
+ display: none;
+ position: fixed;
+ right: 16px;
+ top: 48px;
+}
+
+.dot-button {
+ background-color: transparent;
+ border: none;
+ cursor: pointer;
+}
+
+.title-field {
+ border: none;
+}
+.title-field:active,
+.title-field:focus {
+ border: none;
+}
