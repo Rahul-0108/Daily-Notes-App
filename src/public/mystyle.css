@@ -55,7 +55,33 @@
 .title-field {
  border: none;
 }
+
 .title-field:active,
 .title-field:focus {
  border: none;
+}
+
+.left-div {
+ width: 10%;
+ text-align: center;
+ margin-top: 40px;
+ float: left;
+}
+
+.right-div {
+ width: 90%;
+ margin-left: 48px;
+ margin-bottom: 88px;
+}
+
+@media (max-width: 800px) {
+ .left-div {
+  margin-top: 8px;
+  width: 100%;
+ }
+ .right-div {
+  margin-top: 18px;
+  margin-left: 8px;
+  width: 100%;
+ }
 }

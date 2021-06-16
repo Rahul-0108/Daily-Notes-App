@@ -17,6 +17,9 @@
    value = $(this).val().toLowerCase(); $("#table tr").filter(function() {
    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1) }); }); });
   </script>
+  <style>
+   * { box-sizing: border-box; }
+  </style>
  </head>
  <body>
 
@@ -28,7 +31,7 @@
    <diV class="drop-down" id="drop-down"><a class="btn btn-danger" href="/logout">Logout</a></diV>
   </div>
 
-  <div style="height: 48px;visibility:{{display}}">
+  <div style="height: 48px;visibility:{{display}}; margin-bottom:18px;">
    <div class="alert {{alert_type}} alert-dismissible">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <strong>{{success}}</strong>
@@ -36,89 +39,91 @@
   </div>
 
   <div>
-   <div style="width:10%;text-align:center;margin-top:40px; float:left;">
+   <div class="left-div">
     <div style="margin-bottom:18px;margin-left:8px;">
      <button class="btn btn-primary" style="width: 128px;" onclick="addNote()">Add Note</button>
     </div>
     <div style="margin-left:8px;">
-     <button class="btn btn-primary" style="width: 142px;" onclick="searchNotes()">Search All Notes</button>
+     <button class="btn btn-primary" style="width: 142px;margin-bottom:18px;" onclick="searchNotes()">Search All Notes</button>
     </div>
    </div>
-   <div id="new-Note" style="width:90%; margin-left:48px; margin-top:40px;display: {{add_Notes_Div_Display}};">
-    <div class="container">
-     <h2>New Note</h2>
-     <form action="/new_Note" method="POST">
-      <div class="form-group">
-       <label for="Date">Date:</label>
-       <input type="text" class="form-control" id="date" placeholder="Enter Date" name="date" required />
-      </div>
-      <div class="form-group">
-       <label for="title">Title:</label>
-       <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" required />
-      </div>
-      <div class="form-group">
-       <label for="detail">Detail:</label>
-       <textarea type="textarea" class="form-control" id="detail" rows="5" placeholder="Enter detail" name="detail"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-     </form>
+   <div class="right-div">
+    <div id="new-Note" style="display: {{add_Notes_Div_Display}};">
+     <div class="container">
+      <h2>New Note</h2>
+      <form action="/new_Note" method="POST">
+       <div class="form-group">
+        <label for="Date">Date:</label>
+        <input type="text" class="form-control" id="date" placeholder="Enter Date" name="date" required />
+       </div>
+       <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" required />
+       </div>
+       <div class="form-group">
+        <label for="detail">Detail:</label>
+        <textarea type="textarea" class="form-control" id="detail" rows="5" placeholder="Enter detail" name="detail"></textarea>
+       </div>
+       <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+     </div>
     </div>
-   </div>
 
-   <div
-    id="search_Notes"
-    style="width:90%; margin-left:48px; margin-top:40px;display: {{search_Notes_Div_Display}};margin-bottom: 88px;"
-   >
-    <div class="container">
-     <input type="text" class="form-control" placeholder="filter" id="search" style="margin-bottom: 18px;" />
-     <table class="table table-bordered table-hover">
-      <thead class="thead-dark">
-       <tr>
-        <th style="text-align: center;">Date</th>
-        <th style="text-align: center;">Title</th>
-        <th style="text-align: center;">Detail</th>
-        <th style="text-align: center;">Update/Delete</th>
-       </tr>
-      </thead>
-      <tbody id="table">
-       {{#each result}}
+    <div id="search_Notes" style="display:{{search_Notes_Div_Display}};">
+
+     <div class="container">
+      <input type="text" class="form-control" placeholder="filter" id="search" style="margin-bottom: 18px;" />
+      <table class="table table-bordered table-hover">
+       <thead class="thead-dark">
         <tr>
-         <form action="/update_Note" method="POST">
-          <td name="date">{{this.date}}</td>
-          <td><textarea
-            type="textarea"
-            name="title"
-            style="border: none;height:110px;"
-            class="title-field form-control"
-            required
-           >{{this.title}}</textarea></td>
-          <td><textarea
-            type="textarea"
-            name="detail"
-            style="border: none; height:110px;"
-            class="title-field form-control"
-           >{{this.detail}}</textarea></td>
-          <td style="text-align: center;"><div style="margin-bottom:12px;"><button
-             type="submit"
-             class="btn btn-info"
-             onclick="document.getElementById('Update_Delete').value='Update,{{this.date}}'"
-            >Update</button></div><input type="text" name="Update_Delete" id="Update_Delete" style="display: none;" /><button
-            type="submit"
-            class="btn btn-danger"
-            onclick="document.getElementById('Update_Delete').value='Delete,{{this.date}}'"
-            style="width:78px;"
-           >Delete</button></td>
-         </form>
+         <th style="text-align: center;">Date</th>
+         <th style="text-align: center;">Title</th>
+         <th style="text-align: center;">Detail</th>
+         <th style="text-align: center;">Update/Delete</th>
         </tr>
-       {{/each}}
-      </tbody>
-     </table>
+       </thead>
+       <tbody id="table">
+        {{#each result}}
+         <tr>
+          <form action="/update_Note" method="POST">
+           <td><span class="dateLabel">{{this.date}}</span></td>
+           <td><textarea
+             type="textarea"
+             name="title"
+             style="border: none;height:110px;"
+             class="title-field form-control"
+             required
+            >{{this.title}}</textarea></td>
+           <td><textarea
+             type="textarea"
+             name="detail"
+             style="border: none; height:110px;"
+             class="title-field form-control"
+            >{{this.detail}}</textarea></td>
+           <td style="text-align: center;"><div style="margin-bottom:12px;"><button
+              type="submit"
+              class="btn btn-info"
+              onclick="updateDelete('{{this.date}}' , 'Update')"
+             >Update</button></div><input type="text" name="Update_Delete" class="Update_Delete" style="display: none;" /><button
+             type="submit"
+             class="btn btn-danger"
+             onclick="updateDelete('{{this.date}}' , 'Delete')"
+             style="width:78px;"
+            >Delete</button></td>
+          </form>
+         </tr>
+        {{/each}}
+       </tbody>
+      </table>
+     </div>
     </div>
    </div>
   </div>
   <h1 class="footer">This is a sample App</h1>
   <script>
-   document.getElementById("date").value= new Date(); window.history.forward();
+   function updateDelete(date , edit) { const dateArray = document.getElementsByClassName("dateLabel"); for(let i= 0; i <
+   dateArray.length; i++) { if(dateArray[i].innerHTML == date) {const elements = document.getElementsByClassName("Update_Delete");
+   elements[i].value= edit + ',' + date ; break;} } } document.getElementById("date").value= new Date(); window.history.forward();
   </script>
  </body>
 </html>

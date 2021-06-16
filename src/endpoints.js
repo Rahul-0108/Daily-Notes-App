@@ -14,7 +14,7 @@ router.get("/", mongoDbConnectionMiddleware, (request, response) => {
   response.render("dailyNotes", {
    un: request.cookies.name[0],
    search_Notes_Div_Display: "none",
-   add_Notes_Div_Display: "none",
+   add_Notes_Div_Display: "block",
    display: "hidden",
   });
  } else {
@@ -83,6 +83,9 @@ router.post("/new_Note", async (request, response) => {
 
 router.get("/view_Notes", async (request, response, next) => {
  try {
+  if (!request.cookies.name) {
+   response.redirect("/");
+  }
   const result = await mongoDbCrud("view_Notes", request);
   response.render("dailyNotes", {
    result,
@@ -95,6 +98,10 @@ router.get("/view_Notes", async (request, response, next) => {
   console.log(error.message);
   next(error);
  }
+});
+
+router.get("/update_Note", async (request, response, next) => {
+ response.redirect("/");
 });
 
 router.post("/update_Note", async (request, response, next) => {
@@ -114,6 +121,10 @@ router.post("/update_Note", async (request, response, next) => {
   console.log(error.message);
   next(error);
  }
+});
+
+router.get("*", async (request, response, next) => {
+ response.redirect("/");
 });
 
 // Daily Notes  Functionality
@@ -136,6 +147,7 @@ async function mongoDbCrud(operation, request) {
   Person = new mongoose.model("Person", schema);
 
   dailyNoteSchema = new mongoose.Schema({
+   username: { type: String, isrequired: true },
    date: { type: Date, isrequired: true },
    title: { type: String, isrequired: true },
    detail: { type: String, isrequired: true },
@@ -157,11 +169,18 @@ async function mongoDbCrud(operation, request) {
    }
    break;
   case "new_Note":
-   const DailyNotesObject = new DailyNotes({ date: request.body.date, title: request.body.title, detail: request.body.detail });
+   const DailyNotesObject = new DailyNotes({
+    username: request.cookies.name,
+    date: request.body.date,
+    title: request.body.title,
+    detail: request.body.detail,
+   });
    await DailyNotes.insertMany([DailyNotesObject]);
    break;
   case "view_Notes":
-   let mongoData = await DailyNotes.find({}, { date: 1, title: 1, detail: 1, _id: 0 }).sort({ date: -1 });
+   let mongoData = await DailyNotes.find({ username: request.cookies.name }, { date: 1, title: 1, detail: 1, _id: 0 }).sort({
+    date: -1,
+   });
    let data = [];
    for (const document of mongoData) {
     data.push({ date: document.date, title: document.title, detail: document.detail });
@@ -181,9 +200,12 @@ async function mongoDbCrud(operation, request) {
   case "update_Note":
    const operationData = request.body.Update_Delete.split(",");
    if (operationData[0] == "Update") {
-    await DailyNotes.updateOne({ date: operationData[1] }, { $set: { title: request.body.title, detail: request.body.detail } });
+    await DailyNotes.updateOne(
+     { username: request.cookies.name, date: operationData[1] },
+     { $set: { title: request.body.title, detail: request.body.detail } }
+    );
    } else {
-    await DailyNotes.deleteOne({ date: operationData[1] });
+    await DailyNotes.deleteOne({ username: request.cookies.name, date: operationData[1] });
    }
    return operationData[0];
  }
