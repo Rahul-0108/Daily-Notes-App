@@ -36,7 +36,6 @@ router.post("/login", async (request, response, next) => {
    });
   }
  } catch (error) {
-  console.log(error.message);
   next(error);
  }
 });
@@ -50,7 +49,6 @@ router.post("/registration", async (request, response, next) => {
    alert_type: result == undefined ? "alert-success" : "alert-danger",
   });
  } catch (error) {
-  console.log(error.message);
   next(error);
  }
 });
@@ -76,7 +74,6 @@ router.post("/new_Note", async (request, response) => {
    alert_type: "alert-success",
   });
  } catch (error) {
-  console.log(error.message);
   next(error);
  }
 });
@@ -95,7 +92,6 @@ router.get("/view_Notes", async (request, response, next) => {
    display: "hidden",
   });
  } catch (error) {
-  console.log(error.message);
   next(error);
  }
 });
@@ -118,7 +114,6 @@ router.post("/update_Note", async (request, response, next) => {
    alert_type: "alert-success",
   });
  } catch (error) {
-  console.log(error.message);
   next(error);
  }
 });
@@ -133,9 +128,7 @@ const connectMongoose = async () => {
  try {
   await mongoose.connect("mongodb://localhost:27017/mongoDbCrud", { useNewUrlParser: true, useUnifiedTopology: true });
   isConnectionEstablished = true;
- } catch (error) {
-  console.log("Failed to establish connection to MongoDb " + error.message);
- }
+ } catch (error) {}
 };
 
 async function mongoDbCrud(operation, request) {

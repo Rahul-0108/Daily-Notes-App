@@ -20,7 +20,6 @@ app.use(cookieParser());
 
 app.use(router);
 app.use((error, request, response, next) => {
- console.log("Error");
  response.status(400).send("DataBase is causing the error");
 });
 
