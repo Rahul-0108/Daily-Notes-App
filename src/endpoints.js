@@ -96,10 +96,6 @@ router.get("/view_Notes", async (request, response, next) => {
  }
 });
 
-router.get("/update_Note", async (request, response, next) => {
- response.redirect("/");
-});
-
 router.post("/update_Note", async (request, response, next) => {
  try {
   const result = await mongoDbCrud("update_Note", request);
