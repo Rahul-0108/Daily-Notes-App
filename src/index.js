@@ -8,6 +8,8 @@ var cookieParser = require("cookie-parser");
 const staticFilePath = path.join(__dirname, "./public");
 const newFolderPath = path.join(__dirname, "./views");
 
+const PORT = process.env.PORT || 8000;
+
 app.use(express.static(staticFilePath));
 app.set("view engine", "hbs");
 app.set("views", newFolderPath);
@@ -23,4 +25,4 @@ app.use((error, request, response, next) => {
  response.status(400).send("DataBase is causing the error");
 });
 
-app.listen("8000", () => console.log("listening on port 8000"));
+app.listen(PORT, () => console.log("listening on port 8000"));
