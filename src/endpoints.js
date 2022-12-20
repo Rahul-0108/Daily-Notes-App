@@ -122,7 +122,7 @@ router.get("*", async (request, response, next) => {
 
 const connectMongoose = async () => {
  try {
-  await mongoose.connect("mongodb://localhost:27017/mongoDbCrud", { useNewUrlParser: true, useUnifiedTopology: true });
+  await mongoose.connect("mongodb://localhost:27017/mongoDbCrud" /*mongodb://mongocontainer:27017/mongoDbCrud  for docker*/, { useNewUrlParser: true, useUnifiedTopology: true });
   isConnectionEstablished = true;
  } catch (error) {}
 };

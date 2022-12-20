@@ -22,7 +22,8 @@ app.use(cookieParser());
 
 app.use(router);
 app.use((error, request, response, next) => {
- response.status(400).send("DataBase is causing the error");
+  console.log(JSON.stringify(error))
+  response.status(400).send("DataBase is causing the error");
 });
 
 app.listen(PORT, () => console.log("listening on port 8000"));

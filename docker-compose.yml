@@ -1,0 +1,15 @@
+# This is declarative manifest file describing an App
+version: "3.8"
+services:
+ web-fe: # web-fe App
+  build: . # call Dockerfile to build Image
+  command: npm start # App to Run when Container Starts
+  ports: # Map 5000 port on Docker Host to 8000 on Container
+   - target: 8000
+     published: 5000
+ mongocontainer: # Second Service name Mongo that just pulls a stock Image from Docker Hub
+  image: "mongo"
+  ports:
+   - 27017:27017
+
+  # We need to set connection string in endpoint.js based on the container name , here "mongocontainer"
