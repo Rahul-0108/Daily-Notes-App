@@ -2,8 +2,12 @@
 version: "3.8"
 services:
  web-fe: # web-fe App
-  build: . # call Dockerfile to build Image
+  # This needs to be a pre-build Image and Stored in DockerHub so that All the Nodes can Access it
+  # from there because there are different Docker Hosts/Nodes
+  image: rahuljaiswal1000/nodemongoappfe:latest
   command: npm start # App to Run when Container Starts
+  deploy:
+   replicas: 10
   ports: # Map 5000 port on Docker Host to 8000 on Container
    - target: 8000
      published: 5000
@@ -11,5 +15,5 @@ services:
   image: "mongo"
   ports:
    - 27017:27017
-
+  # mongodb should be on 1 contaimer only, as it is a database, ,ore than 1 replica will make it out of sync
   # We need to set connection string in endpoint.js based on the container name , here "mongocontainer"
